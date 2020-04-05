@@ -9,50 +9,58 @@
 import Foundation
 
 class Calculator {
-var expression = ""
-var elements: [String] {
-    return expression.split(separator: " ").map { "\($0)" }
-}
+    var number = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    var operators = ["+", "-", "/", "*", "="]
+    var result = 0
+    var total = 0
+    var calculResult = [Int]()
 
-// Error check computed variables
-var expressionIsCorrect: Bool {
-    return elements.last != "+" && elements.last != "-"
-}
-
-var expressionHaveEnoughElement: Bool {
-    return elements.count >= 3
-}
-
-var canAddOperator: Bool {
-    return elements.last != "+" && elements.last != "-"
-}
-
-var expressionHaveResult: Bool {
-    return expression.firstIndex(of: "=") != nil
-}
-
-func totalCalcul() {
-
-            // Create local copy of operations
-            var operationsToReduce = elements
-
-            // Iterate over operations while an operand still here
-            while operationsToReduce.count > 1 {
-                let left = Int(operationsToReduce[0])!
-                let operand = operationsToReduce[1]
-                let right = Int(operationsToReduce[2])!
-
-                let result: Int
-                switch operand {
-                case "+": result = left + right
-                case "-": result = left - right
-                default: fatalError("Unknown operator !")
-                }
-
-                operationsToReduce = Array(operationsToReduce.dropFirst(3))
-                operationsToReduce.insert("\(result)", at: 0)
-            }
-
-            expression.append(" = \(operationsToReduce.first!)")
+    func manyCalcul() {
+        let left = calculResult[0]
+        let right = calculResult[1]
+        while calculResult.count >= 2 && operators.description != "=" {
+            total = calcul(left: left, right: right, with: operators[0] )
         }
+    }
+
+    func calcul(left: Int, right: Int, with currentOperator: String) -> Int {
+        let operand = currentOperator
+        switch operand {
+        case "+":
+           result = additionCalcul(left: left, right: right)
+        case "-":
+            result = substractionCalcul(left: left, right: right)
+        case "/":
+            result = divisionCalcul(left: left, right: right)
+        case "*":
+            result = multiplicationcalcul(left: left, right: right)
+        default:
+            break
+        }
+        calculResult.append(result)
+        return result
+    }
+
+    private func additionCalcul(left: Int, right: Int) -> Int {
+        result = left + right
+        return result
+    }
+
+    private func substractionCalcul(left: Int, right: Int) -> Int {
+        result = left - right
+        return result
+    }
+
+    private func divisionCalcul(left: Int, right: Int) -> Int {
+        if left != 0 && right != 0 {
+            result = left / right
+            return result
+        }
+        return 0
+    }
+
+    private func multiplicationcalcul(left: Int, right: Int) -> Int {
+        result = left * right
+        return result
+    }
 }
