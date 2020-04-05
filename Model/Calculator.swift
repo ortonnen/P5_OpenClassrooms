@@ -9,27 +9,50 @@
 import Foundation
 
 class Calculator {
+var expression = ""
+var elements: [String] {
+    return expression.split(separator: " ").map { "\($0)" }
+}
 
-    var number = [Int]()
-    var operators = ["+", "-", "="]
-    var result = 0
+// Error check computed variables
+var expressionIsCorrect: Bool {
+    return elements.last != "+" && elements.last != "-"
+}
 
-    func calcul(left: Int, right: Int, with currentOperator: String) -> Int {
-        if currentOperator == operators[0] {
-            result = additionCalcul(left: left, right: right)
-        } else if currentOperator == operators[1] {
-            result = substractionCalcul(left: left, right: right)
+var expressionHaveEnoughElement: Bool {
+    return elements.count >= 3
+}
+
+var canAddOperator: Bool {
+    return elements.last != "+" && elements.last != "-"
+}
+
+var expressionHaveResult: Bool {
+    return expression.firstIndex(of: "=") != nil
+}
+
+func totalCalcul() {
+
+            // Create local copy of operations
+            var operationsToReduce = elements
+
+            // Iterate over operations while an operand still here
+            while operationsToReduce.count > 1 {
+                let left = Int(operationsToReduce[0])!
+                let operand = operationsToReduce[1]
+                let right = Int(operationsToReduce[2])!
+
+                let result: Int
+                switch operand {
+                case "+": result = left + right
+                case "-": result = left - right
+                default: fatalError("Unknown operator !")
+                }
+
+                operationsToReduce = Array(operationsToReduce.dropFirst(3))
+                operationsToReduce.insert("\(result)", at: 0)
+            }
+
+            expression.append(" = \(operationsToReduce.first!)")
         }
-        return result
-    }
-
-    private func additionCalcul(left: Int, right: Int) -> Int {
-            result = left + right
-            return result
-        }
-
-    private func substractionCalcul(left: Int, right: Int) -> Int {
-            result = left - right
-            return result
-    }
 }

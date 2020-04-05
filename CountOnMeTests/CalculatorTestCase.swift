@@ -18,19 +18,11 @@ class CalculatorTestCase: XCTestCase {
     }
 
     func testGivenStartOperation_WhenMakeAddition_ThenAdditionLeftAndRight() {
-        var result = calculator.result
 
-       result = calculator.calcul(left: 3, right: 2, with: "+")
-
-        XCTAssertEqual(result, 5)
     }
 
     func testGivenStartOperation_WhenMakeSubstarction_ThenSubstractLeftAndRight() {
-        var result = calculator.result
 
-        result = calculator.calcul(left: 3, right: 2, with: "-")
-
-        XCTAssertEqual(result, 1)
     }
 
 }
