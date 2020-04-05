@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
 
+    var cL = ControllerLogic()
     var calculator = Calculator()
     var elements: [String] {
         return textView.text.split(separator: " ").map { "\($0)" }
@@ -83,7 +84,7 @@ class ViewController: UIViewController {
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             return self.present(alertVC, animated: true, completion: nil)
         }
-        calculator.totalCalcul()
+        cL.finalCalcul()
     }
 
 }
