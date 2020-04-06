@@ -9,22 +9,29 @@
 import Foundation
 
 class Calculator {
-    var number = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    var numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     var operators = ["+", "-", "/", "*", "="]
     var result = 0
     var total = 0
-    var calculResult = [Int]()
+    var calculNumber = [Int]()
+    var calculelements = [String]()
 
-    func manyCalcul() {
-        let left = calculResult[0]
-        let right = calculResult[1]
-        while calculResult.count >= 2 && operators.description != "=" {
-            total = calcul(left: left, right: right, with: operators[0] )
+    
+    func addNewNumber(_ newNumber: Int) {
+        if let number = calculNumber.last {
+            var numberMutable = number
+            numberMutable += newNumber
+            calculNumber[calculNumber.count-1] = numberMutable
         }
     }
 
-    func calcul(left: Int, right: Int, with currentOperator: String) -> Int {
-        let operand = currentOperator
+    func calcul() {
+        let left = calculNumber[0]
+        let right = calculNumber [1]
+        let operand = operators[0]
+
+        while calculNumber.count >= 2 && operators.description != "=" {
+
         switch operand {
         case "+":
            result = additionCalcul(left: left, right: right)
@@ -37,8 +44,8 @@ class Calculator {
         default:
             break
         }
-        calculResult.append(result)
-        return result
+        calculNumber.insert(result, at: 0)
+        }
     }
 
     private func additionCalcul(left: Int, right: Int) -> Int {
