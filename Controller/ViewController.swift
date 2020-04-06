@@ -12,7 +12,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
 
-    var cL = ControllerLogic()
     var calculator = Calculator()
     var elements: [String] {
         return textView.text.split(separator: " ").map { "\($0)" }
@@ -50,6 +49,7 @@ class ViewController: UIViewController {
             textView.text = ""
         }
         textView.text.append(numberText)
+        calculator.addNewNumber(sender.tag)
     }
 
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
@@ -84,7 +84,8 @@ class ViewController: UIViewController {
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             return self.present(alertVC, animated: true, completion: nil)
         }
-        cL.finalCalcul()
+        calculator.calcul()
+        textView.text.append(" = \(calculator.result)")
     }
 
 }
