@@ -15,39 +15,36 @@ class Calculator {
     var calculelements = [String]()
 
     func addNewNumber(_ newNumber: Int) {
-        if let number = calculNumber.last {
-            var numberMutable = number
-            numberMutable += newNumber
-            calculNumber[calculNumber.count-1] = numberMutable
-        }
         calculNumber.append(newNumber)
     }
 
     func addOperator(_ newOperator: String) {
-        operators.append(newOperator)
+        operators.insert(newOperator, at: 0)
     }
 
-    func calcul() {
+    func sum() -> Int {
         let left = calculNumber[0]
         let right = calculNumber [1]
         let operand = operators[0]
 
         while calculNumber.count >= 2 && operators.description != "=" {
 
-        switch operand {
-        case "+":
-           result = additionCalcul(left: left, right: right)
-        case "-":
-            result = substractionCalcul(left: left, right: right)
-        case "/":
-            result = divisionCalcul(left: left, right: right)
-        case "*":
-            result = multiplicationcalcul(left: left, right: right)
-        default:
-            break
+            switch operand {
+            case "+":
+               result = additionCalcul(left: left, right: right)
+            case "-":
+                result = substractionCalcul(left: left, right: right)
+            case "/":
+                result = divisionCalcul(left: left, right: right)
+            case "*":
+                result = multiplicationcalcul(left: left, right: right)
+            default:
+                break
+            }
+            operators.removeFirst()
+            calculNumber.insert(result, at: 0)
         }
-        calculNumber.insert(result, at: 0)
-        }
+        return result
     }
 
     func additionCalcul(left: Int, right: Int) -> Int {
@@ -64,8 +61,9 @@ class Calculator {
         if left != 0 && right != 0 {
             result = left / right
             return result
+        } else {
+            return -99999
         }
-        return 0
     }
 
     func multiplicationcalcul(left: Int, right: Int) -> Int {
