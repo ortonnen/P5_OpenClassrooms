@@ -17,35 +17,25 @@ class CalculatorTestCase: XCTestCase {
         calculator = Calculator()
     }
 
-    func testGivenStartOperation_WhenMakeAddition_ThenAdditionLeftAndRight() {
-        var result = calculator.result
+    func testGivenStartOperation_WhenMakeAllCalcul_ThenAllResultIsPossible() {
+        let add = calculator.additionCalcul(left: 3, right: 3)
+        let sub = calculator.substractionCalcul(left: add, right: 4)
+        let div = calculator.divisionCalcul(left: add, right: sub)
+        let mul = calculator.multiplicationcalcul(left: div, right: sub)
 
-        result = calculator.calcul(left: 3, right: 2, with: "+")
-
-        XCTAssertEqual(result, 5)
+        XCTAssertEqual(add, 6)
+        XCTAssertEqual(sub, 2)
+        XCTAssertEqual(div, 3)
+        XCTAssertEqual(mul, 6)
     }
 
-    func testGivenStartOperation_WhenMakeSubstarction_ThenSubstractLeftAndRight() {
-        var result = calculator.result
+    func testGivenStarOperation_WhenAddNewNumber_ThenCalculIsPossible() {
+        calculator.addNewNumber(5)
+        calculator.addNewNumber(10)
+        calculator.addOperator("+")
 
-        result = calculator.calcul(left: 3, right: 2, with: "-")
+        calculator.calcul()
 
-        XCTAssertEqual(result, 1)
-    }
-
-    func testGivenStartOperation_WhenMakeDivision_ThenSubstractLeftAndRight() {
-        var result = calculator.result
-
-        result = calculator.calcul(left: 10, right: 2, with: "/")
-
-        XCTAssertEqual(result, 5)
-    }
-
-    func testGivenStartOperation_WhenMakeMultiplication_ThenSubstractLeftAndRight() {
-        var result = calculator.result
-
-        result = calculator.calcul(left: 5, right: 2, with: "*")
-
-        XCTAssertEqual(result, 10 )
+        XCTAssertEqual(calculator.result, 15)
     }
 }
