@@ -9,20 +9,22 @@
 import Foundation
 
 class Calculator {
-    var numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    var operators = ["+", "-", "/", "*", "="]
+    var operators = [String]()
     var result = 0
-    var total = 0
     var calculNumber = [Int]()
     var calculelements = [String]()
 
-    
     func addNewNumber(_ newNumber: Int) {
         if let number = calculNumber.last {
             var numberMutable = number
             numberMutable += newNumber
             calculNumber[calculNumber.count-1] = numberMutable
         }
+        calculNumber.append(newNumber)
+    }
+
+    func addOperator(_ newOperator: String) {
+        operators.append(newOperator)
     }
 
     func calcul() {
@@ -48,17 +50,17 @@ class Calculator {
         }
     }
 
-    private func additionCalcul(left: Int, right: Int) -> Int {
+    func additionCalcul(left: Int, right: Int) -> Int {
         result = left + right
         return result
     }
 
-    private func substractionCalcul(left: Int, right: Int) -> Int {
+    func substractionCalcul(left: Int, right: Int) -> Int {
         result = left - right
         return result
     }
 
-    private func divisionCalcul(left: Int, right: Int) -> Int {
+    func divisionCalcul(left: Int, right: Int) -> Int {
         if left != 0 && right != 0 {
             result = left / right
             return result
@@ -66,7 +68,7 @@ class Calculator {
         return 0
     }
 
-    private func multiplicationcalcul(left: Int, right: Int) -> Int {
+    func multiplicationcalcul(left: Int, right: Int) -> Int {
         result = left * right
         return result
     }
