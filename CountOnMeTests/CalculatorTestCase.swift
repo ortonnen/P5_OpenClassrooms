@@ -31,11 +31,21 @@ class CalculatorTestCase: XCTestCase {
 
     func testGivenStarOperation_WhenAddNewNumber_ThenCalculIsPossible() {
         calculator.addNewNumber(5)
-        calculator.addNewNumber(10)
         calculator.addOperator("+")
+        calculator.addNewNumber(10)
+        calculator.addOperator("=")
 
-        calculator.calcul()
+        XCTAssertEqual(calculator.sum(), 15)
+    }
 
-        XCTAssertEqual(calculator.result, 15)
+    func testGivenStarOperation_WhenAddPriorityCalculation_ThenCalculIsPossible() {
+        calculator.addNewNumber(2)
+        calculator.addOperator("+")
+        calculator.addNewNumber(2)
+        calculator.addOperator("+")
+        calculator.addNewNumber(3)
+        //calculator.addOperator("=")
+
+        XCTAssertEqual(calculator.sum(), 7)
     }
 }
