@@ -60,6 +60,7 @@ class ViewController: UIViewController {
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alertVC, animated: true, completion: nil)
         }
+        calculator.addOperator("+")
     }
 
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
@@ -70,6 +71,7 @@ class ViewController: UIViewController {
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alertVC, animated: true, completion: nil)
         }
+        calculator.addOperator("-")
     }
 
     @IBAction func tappedEqualButton(_ sender: UIButton) {
@@ -84,8 +86,9 @@ class ViewController: UIViewController {
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             return self.present(alertVC, animated: true, completion: nil)
         }
-        calculator.calcul()
-        textView.text.append(" = \(calculator.result)")
+
+        textView.text.append(" = \(calculator.calcul())")
+        calculator.clear()
     }
 
 }
