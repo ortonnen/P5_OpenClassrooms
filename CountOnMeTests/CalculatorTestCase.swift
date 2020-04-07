@@ -17,35 +17,65 @@ class CalculatorTestCase: XCTestCase {
         calculator = Calculator()
     }
 
-    func testGivenStartOperation_WhenMakeAllCalcul_ThenAllResultIsPossible() {
-        let add = calculator.additionCalcul(left: 3, right: 3)
-        let sub = calculator.substractionCalcul(left: add, right: 4)
-        let div = calculator.divisionCalcul(left: add, right: sub)
-        let mul = calculator.multiplicationcalcul(left: div, right: sub)
-
-        XCTAssertEqual(add, 6)
-        XCTAssertEqual(sub, 2)
-        XCTAssertEqual(div, 3)
-        XCTAssertEqual(mul, 6)
-    }
-
     func testGivenStarOperation_WhenAddNewNumber_ThenCalculIsPossible() {
         calculator.addNewNumber(5)
         calculator.addOperator("+")
         calculator.addNewNumber(10)
         calculator.addOperator("=")
 
-        XCTAssertEqual(calculator.sum(), 15)
+        XCTAssertEqual(calculator.calcul(), 15)
     }
 
-    func testGivenStarOperation_WhenAddPriorityCalculation_ThenCalculIsPossible() {
+    func testGivenStarOperation_WhenNoPriorityCalculation_ThenCalculIsPossible() {
         calculator.addNewNumber(2)
         calculator.addOperator("+")
         calculator.addNewNumber(2)
-        calculator.addOperator("+")
+        calculator.addOperator("*")
         calculator.addNewNumber(3)
-        //calculator.addOperator("=")
+        calculator.addOperator("=")
 
-        XCTAssertEqual(calculator.sum(), 7)
+        XCTAssertEqual(calculator.calcul(), 12)
     }
+
+    func testGivenStarOpertion_WhenDivision_ThenCalculIsCorrect() {
+        calculator.addNewNumber(2)
+        calculator.addOperator("*")
+        calculator.addNewNumber(2)
+
+        XCTAssertEqual(calculator.calcul(), 4)
+
+    }
+
+    func testGivenMakeManyCalcul_WhenFirstIsOver_ThenSecondCalculStart() {
+        var firstCalcul = 0
+        var secondCalcul = 0
+        calculator.addNewNumber(2)
+        calculator.addOperator("*")
+        calculator.addNewNumber(2)
+        calculator.addOperator("=")
+
+        firstCalcul = calculator.calcul()
+        calculator.clear()
+
+        calculator.addNewNumber(firstCalcul)
+        calculator.addOperator("/")
+        calculator.addNewNumber(2)
+        calculator.addOperator("=")
+
+        secondCalcul = calculator.calcul()
+
+        XCTAssertEqual(firstCalcul, 4)
+        XCTAssertEqual(secondCalcul, 2)
+    }
+
+    func testGivenStartCalculWithManyOperator_WhenOperatorHasPriority_ThenCalculStartWithThis() {
+        calculator.addNewNumber(10)
+        calculator.addOperator("+")
+        calculator.addNewNumber(5)
+        calculator.addOperator("*")
+        calculator.addNewNumber(2)
+
+        XCTAssertEqual(calculator.calcul(), 20)
+    }
+
 }
