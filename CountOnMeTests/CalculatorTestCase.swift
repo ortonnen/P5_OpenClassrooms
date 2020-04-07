@@ -27,14 +27,14 @@ class CalculatorTestCase: XCTestCase {
     }
 
     func testGivenStarOperation_WhenNoPriorityCalculation_ThenCalculIsPossible() {
-        calculator.addNewNumber(2)
+        calculator.addNewNumber(4)
         calculator.addOperator("+")
-        calculator.addNewNumber(2)
+        calculator.addNewNumber(6)
         calculator.addOperator("*")
-        calculator.addNewNumber(3)
+        calculator.addNewNumber(2)
         calculator.addOperator("=")
 
-        XCTAssertEqual(calculator.calcul(), 12)
+        XCTAssertEqual(calculator.calcul(), 20)
     }
 
     func testGivenStarOpertion_WhenDivision_ThenCalculIsCorrect() {
