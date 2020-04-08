@@ -74,6 +74,19 @@ class ViewController: UIViewController {
         calculator.addOperator("-")
     }
 
+    @IBAction func tappedMultiplyButton(_ sender: UIButton) {
+        calculator.addOperator("*")
+    }
+
+    @IBAction func tappedDivideButton(_ sender: UIButton) {
+        calculator.addOperator("/")
+    }
+
+
+    @IBAction func tappedResetButton(_ sender: UIButton) {
+        calculator.clear()
+    }
+
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         guard expressionIsCorrect else {
             let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
