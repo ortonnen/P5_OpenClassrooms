@@ -9,11 +9,11 @@
 import Foundation
 
 class Calculator {
+    //MARK: Proprities
     var operators = [String]()
     var calculNumber = [Int]()
 
-    var calculElements = [String]()
-
+    ///check if the calculation contains priority operator
     var isAPriorityOperator: Bool {
         for usedOperator in operators {
             if usedOperator == "*" || usedOperator == "/"{
@@ -25,18 +25,20 @@ class Calculator {
 
     var result = 0
 
+    //MARK: Internal Methode
+    /// Number Array
     func addNewNumber(_ newNumber: Int) {
         calculNumber.append(newNumber)
-        calculElements.append(String(newNumber))
     }
 
+    /// Operator Array
     func addOperator(_ newOperator: String) {
         operators.append(newOperator)
-        calculElements.append(newOperator)
     }
 
+    /// Calculation logic method
     func calcul() -> Int {
-        priorityCalculTestWithTwoArray()
+        priorityCalcul()
         while calculNumber.count >= 2 {
             let left = calculNumber[0]
             let right = calculNumber [1]
@@ -47,10 +49,6 @@ class Calculator {
                 result = additionCalcul(left: left, right: right)
             case "-":
                 result = substractionCalcul(left: left, right: right)
-            case "/":
-                result = divisionCalcul(left: left, right: right)
-            case "*":
-                result = multiplicationcalcul(left: left, right: right)
             default:
                 break
             }
@@ -62,61 +60,40 @@ class Calculator {
         return result
     }
 
-    func testCalcul() -> Int {
-        priorityCalculTestWithOneArray()
-        while calculElements.count >= 3 {
-            let left = Int(calculElements[0])
-            let usedOperator = calculElements[1]
-            let right = Int(calculElements[2])
-
-            switch usedOperator {
-            case "+":
-                result = additionCalcul(left: left!, right: right!)
-            case "-":
-                result = substractionCalcul(left: left!, right: right!)
-            case "/":
-                result = divisionCalcul(left: left!, right: right!)
-            case "*":
-                result = multiplicationcalcul(left: left!, right: right!)
-            default:
-                break
-            }
-            calculElements.removeFirst()
-            calculElements.removeFirst()
-            calculElements.removeFirst()
-            calculElements.insert(String(result), at: 0)
-        }
-        return result
-    }
-
+    ///methode to remove all array
     func clear() {
         calculNumber.removeAll()
         operators.removeAll()
     }
 
-    func priorityCalculTestWithTwoArray() {
+//MARK: Private Methode
+    ///Calculation logic method for prioritu Operator
+    private func priorityCalcul() {
         while isAPriorityOperator == true {
-            for priorityOperator in operators {
-                var usedOperator = priorityOperator
-                print("The operator is \(usedOperator)")
-                usedOperator.removeFirst()
-            }
-        }
-        print("not priority operator")
-
-    }
-
-    func priorityCalculTestWithOneArray() {
-        while isAPriorityOperator == true {
-            for usedoperator in calculElements {
-                let priorityOperator = usedoperator
+            for usedOperator in operators {
+                let priorityOperator = usedOperator
                 if priorityOperator == "*" || priorityOperator == "/" {
-                    print("The operator is \(priorityOperator)")
-                    //calculElements.remove(at: priorityOperator)
+                    if let operatorIndex = operators.firstIndex(of: priorityOperator) {
+                        let left = calculNumber[operatorIndex]
+                        let right = calculNumber [operatorIndex + 1]
+                        let usedPriorityOperator = operators[operatorIndex]
+
+                        switch usedPriorityOperator {
+                        case "*":
+                            result = multiplicationcalcul(left: left, right: right)
+                        case "/":
+                            result = divisionCalcul(left: left, right: right)
+                        default:
+                            break
+                        }
+                        calculNumber.remove(at: operatorIndex)
+                        calculNumber.remove(at: operatorIndex)
+                        operators.remove(at: operatorIndex)
+                        calculNumber.insert(result, at: operatorIndex)
+                    }
                 }
             }
         }
-        print("not priority operator")
     }
 
     private func additionCalcul(left: Int, right: Int) -> Int {

@@ -26,34 +26,26 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(calculator.calcul(), 15)
     }
 
-    func testGivenStarOperationWithCalculFunc_WhenNoPriorityCalculation_ThenCalculIsPossible() {
-        calculator.addNewNumber(4)
-        calculator.addOperator("+")
-        calculator.addNewNumber(6)
-        calculator.addOperator("*")
-        calculator.addNewNumber(2)
-        calculator.addOperator("=")
-
-        XCTAssertEqual(calculator.calcul(), 20)
-    }
-
-    func testGivenStarOperationWithTestCalculFunc_WhenNoPriorityCalculation_ThenCalculIsPossible() {
-           calculator.addNewNumber(4)
-           calculator.addOperator("+")
-           calculator.addNewNumber(6)
-           calculator.addOperator("*")
-           calculator.addNewNumber(2)
-
-           XCTAssertEqual(calculator.testCalcul(), 20)
-       }
-
-    func testGivenStarOpertion_WhenDivision_ThenCalculIsCorrect() {
+    func testGivenStarOpertion_WhenOperatorIsMultiply_ThenCalculIsCorrect() {
         calculator.addNewNumber(2)
         calculator.addOperator("*")
         calculator.addNewNumber(2)
 
         XCTAssertEqual(calculator.calcul(), 4)
+    }
 
+    func testGivenStarOperationWithCalculFunc_WhenPriorityCalculation_ThenCalculIsPossible() {
+        calculator.addNewNumber(20)
+        calculator.addOperator("+")
+        calculator.addNewNumber(5)
+        calculator.addOperator("*")
+        calculator.addNewNumber(4)
+        calculator.addOperator("/")
+        calculator.addNewNumber(2)
+        calculator.addOperator("-")
+        calculator.addNewNumber(12)
+
+        XCTAssertEqual(calculator.calcul(), 18)
     }
 
     func testGivenMakeManyCalcul_WhenFirstIsOver_ThenSecondCalculStart() {
@@ -94,14 +86,5 @@ class CalculatorTestCase: XCTestCase {
         calculator.addOperator("+")
 
         XCTAssertEqual(calculator.isAPriorityOperator, false)
-    }
-
-    func testGivenUseOperator_WhenIsAPriorityOperator_ThenPrintOperator() {
-        calculator.addOperator("+")
-        calculator.addOperator("*")
-        calculator.addOperator("-")
-        calculator.addOperator("/")
-
-        calculator.priorityCalculTestWithOneArray()
     }
 }
