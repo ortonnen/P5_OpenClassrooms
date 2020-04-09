@@ -75,15 +75,29 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedMultiplyButton(_ sender: UIButton) {
+        if canAddOperator {
+            textView.text.append(" x ")
+        } else {
+            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alertVC, animated: true, completion: nil)
+        }
         calculator.addOperator("*")
     }
 
     @IBAction func tappedDivideButton(_ sender: UIButton) {
+        if canAddOperator {
+            textView.text.append(" / ")
+        } else {
+            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alertVC, animated: true, completion: nil)
+        }
         calculator.addOperator("/")
     }
 
-
     @IBAction func tappedResetButton(_ sender: UIButton) {
+        textView.text = "0"
         calculator.clear()
     }
 
