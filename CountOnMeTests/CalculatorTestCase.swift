@@ -26,7 +26,7 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(calculator.calcul(), 15)
     }
 
-    func testGivenStarOperation_WhenNoPriorityCalculation_ThenCalculIsPossible() {
+    func testGivenStarOperationWithCalculFunc_WhenNoPriorityCalculation_ThenCalculIsPossible() {
         calculator.addNewNumber(4)
         calculator.addOperator("+")
         calculator.addNewNumber(6)
@@ -36,6 +36,16 @@ class CalculatorTestCase: XCTestCase {
 
         XCTAssertEqual(calculator.calcul(), 20)
     }
+
+    func testGivenStarOperationWithTestCalculFunc_WhenNoPriorityCalculation_ThenCalculIsPossible() {
+           calculator.addNewNumber(4)
+           calculator.addOperator("+")
+           calculator.addNewNumber(6)
+           calculator.addOperator("*")
+           calculator.addNewNumber(2)
+
+           XCTAssertEqual(calculator.testCalcul(), 20)
+       }
 
     func testGivenStarOpertion_WhenDivision_ThenCalculIsCorrect() {
         calculator.addNewNumber(2)
@@ -68,14 +78,30 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(secondCalcul, 2)
     }
 
-    func testGivenStartCalculWithManyOperator_WhenOperatorHasPriority_ThenCalculStartWithThis() {
-        calculator.addNewNumber(10)
+    func testGivenUseOperator_WhenOperatorIsMultiplyOrDivide_ThenOperatorIsPrioritaire() {
+        //definir opérator prioritaire
         calculator.addOperator("+")
-        calculator.addNewNumber(5)
+        calculator.addOperator("-")
         calculator.addOperator("*")
-        calculator.addNewNumber(2)
 
-        XCTAssertEqual(calculator.calcul(), 20)
+        XCTAssertEqual(calculator.isAPriorityOperator, true)
     }
 
+    func testGivenUseOperator_WhenOperatorIsMinusOrPlus_ThenOperatorIsNotPrioritaire() {
+        //definir opérator prioritaire
+        calculator.addOperator("+")
+        calculator.addOperator("-")
+        calculator.addOperator("+")
+
+        XCTAssertEqual(calculator.isAPriorityOperator, false)
+    }
+
+    func testGivenUseOperator_WhenIsAPriorityOperator_ThenPrintOperator() {
+        calculator.addOperator("+")
+        calculator.addOperator("*")
+        calculator.addOperator("-")
+        calculator.addOperator("/")
+
+        calculator.priorityCalculTestWithOneArray()
+    }
 }

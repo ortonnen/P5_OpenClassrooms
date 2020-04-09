@@ -6,68 +6,85 @@
 //  Copyright © 2020 Vincent Saluzzo. All rights reserved.
 //
 
-
-/*
- Hello Mehdi,
- j'ai réfléchi à ma priorisation de calcul, et je patauge un peu...
- je t'ai mis en com les 3 idées qui me sont venu en tête pour mettre en place cette priorisation.
- j'espère que au moins une aura le mérite d'être un début de piste.
- Pour ma part, je pese que la plus simple reste la deuxième solution.
-
- je te laisse regarder comme ça on peut débriefer demain avec mes débuts de reflexion.
- */
 import Foundation
 
 class Calculator {
     var operators = [String]()
-    var result = 0
     var calculNumber = [Int]()
-    // deuxième solution créer un nouveau tableau string,
-    // qui comprend mes nums et mes opérands, pour déplacer un bloc
-    // ( l'opérant prioritaire et les nums qui l'englobe)
+
+    var calculElements = [String]()
+
+    var isAPriorityOperator: Bool {
+        for usedOperator in operators {
+            if usedOperator == "*" || usedOperator == "/"{
+                return true
+            }
+        }
+        return false
+    }
+
+    var result = 0
 
     func addNewNumber(_ newNumber: Int) {
         calculNumber.append(newNumber)
+        calculElements.append(String(newNumber))
     }
 
     func addOperator(_ newOperator: String) {
-        // première proposition de priorisation, mais elle ne déplace que l'opérand du coup le calcul reste faux
-        // ex 1 + 2 * 5 = 7 au lieu de 11 car lu 1 * 2 + 5
-        // du coup il faut réussir à déplacer aussi les nums qui l'englobe
-        if newOperator == "*" || newOperator == "/" {
-            operators.insert(newOperator, at: 0)
-        } else {
         operators.append(newOperator)
-        }
+        calculElements.append(newOperator)
     }
 
     func calcul() -> Int {
+        priorityCalculTestWithTwoArray()
         while calculNumber.count >= 2 {
-            var total = 0
             let left = calculNumber[0]
             let right = calculNumber [1]
-            let operand = operators[0]
+            let usedOperator = operators[0]
 
-            switch operand {
+            switch usedOperator {
             case "+":
-                total = additionCalcul(left: left, right: right)
+                result = additionCalcul(left: left, right: right)
             case "-":
-                total = substractionCalcul(left: left, right: right)
+                result = substractionCalcul(left: left, right: right)
             case "/":
-                total = divisionCalcul(left: left, right: right)
+                result = divisionCalcul(left: left, right: right)
             case "*":
-                total = multiplicationcalcul(left: left, right: right)
-            case "=":
-                operators.removeLast()
-                return total
+                result = multiplicationcalcul(left: left, right: right)
             default:
                 break
             }
-            result = total
             calculNumber.removeFirst()
             calculNumber.removeFirst()
             operators.removeFirst()
-            calculNumber.insert(total, at: 0)
+            calculNumber.insert(result, at: 0)
+        }
+        return result
+    }
+
+    func testCalcul() -> Int {
+        priorityCalculTestWithOneArray()
+        while calculElements.count >= 3 {
+            let left = Int(calculElements[0])
+            let usedOperator = calculElements[1]
+            let right = Int(calculElements[2])
+
+            switch usedOperator {
+            case "+":
+                result = additionCalcul(left: left!, right: right!)
+            case "-":
+                result = substractionCalcul(left: left!, right: right!)
+            case "/":
+                result = divisionCalcul(left: left!, right: right!)
+            case "*":
+                result = multiplicationcalcul(left: left!, right: right!)
+            default:
+                break
+            }
+            calculElements.removeFirst()
+            calculElements.removeFirst()
+            calculElements.removeFirst()
+            calculElements.insert(String(result), at: 0)
         }
         return result
     }
@@ -76,37 +93,49 @@ class Calculator {
         calculNumber.removeAll()
         operators.removeAll()
     }
-    private func priorityCalcul() -> Bool {
-        // troisième idée une fonction qui renvois true si l'opérant est * ou / et qui force le début du calul
-        // par le prioritaire.
-        // mais je vois pas trop comment la construire dans ce cas
-        // peut-être créer une variable calculable qui renvoi un bool elle aussi en début de piste
-        // if oprérateur * ou / alors calcul commence par lui
-        // else nil
-        return true
+
+    func priorityCalculTestWithTwoArray() {
+        while isAPriorityOperator == true {
+            for priorityOperator in operators {
+                var usedOperator = priorityOperator
+                print("The operator is \(usedOperator)")
+                usedOperator.removeFirst()
+            }
+        }
+        print("not priority operator")
+
+    }
+
+    func priorityCalculTestWithOneArray() {
+        while isAPriorityOperator == true {
+            for usedoperator in calculElements {
+                let priorityOperator = usedoperator
+                if priorityOperator == "*" || priorityOperator == "/" {
+                    print("The operator is \(priorityOperator)")
+                    //calculElements.remove(at: priorityOperator)
+                }
+            }
+        }
+        print("not priority operator")
     }
 
     private func additionCalcul(left: Int, right: Int) -> Int {
-        result = left + right
-        return result
+        return left + right
     }
 
     private func substractionCalcul(left: Int, right: Int) -> Int {
-        result = left - right
-        return result
+        return left - right
     }
 
     private func divisionCalcul(left: Int, right: Int) -> Int {
         if left != 0 && right != 0 {
-            result = left / right
-            return result
+            return left / right
         } else {
             return -99999
         }
     }
 
     private func multiplicationcalcul(left: Int, right: Int) -> Int {
-        result = left * right
-        return result
+        return left * right
     }
 }
