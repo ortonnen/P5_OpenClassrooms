@@ -9,7 +9,7 @@
 import Foundation
 
 class Calculator {
-    //MARK: Proprities
+    // MARK: Proprities
     var operators = [String]()
     var calculNumber = [Int]()
 
@@ -25,7 +25,7 @@ class Calculator {
 
     var result = 0
 
-    //MARK: Internal Methode
+    // MARK: Internal Methode
     /// Number Array
     func addNewNumber(_ newNumber: Int) {
         calculNumber.append(newNumber)
@@ -66,7 +66,7 @@ class Calculator {
         operators.removeAll()
     }
 
-//MARK: Private Methode
+    // MARK: Private Methode
     ///Calculation logic method for prioritu Operator
     private func priorityCalcul() {
         while isAPriorityOperator == true {
