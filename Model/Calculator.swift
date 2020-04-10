@@ -11,7 +11,7 @@ import Foundation
 class Calculator {
     // MARK: Proprities
     var operators = [String]()
-    var calculNumber = [Int]()
+    var operands = [Int]()
 
     ///check if the calculation contains priority operator
     var isAPriorityOperator: Bool {
@@ -28,7 +28,7 @@ class Calculator {
     // MARK: Internal Methode
     /// Number Array
     func addNewNumber(_ newNumber: Int) {
-        calculNumber.append(newNumber)
+        operands.append(newNumber)
     }
 
     /// Operator Array
@@ -38,63 +38,46 @@ class Calculator {
 
     /// Calculation logic method
     func calcul() -> Int {
-        priorityCalcul()
-        while calculNumber.count >= 2 {
-            let left = calculNumber[0]
-            let right = calculNumber [1]
-            let usedOperator = operators[0]
+        while operands.count >= 2 {
+            var index = 0
+
+            if operators.contains("*") {
+                index = operators.firstIndex(of: "*") ?? 0
+            } else if operators.contains("/") {
+                index = operators.firstIndex(of: "/") ?? 0
+            }
+
+            let left = operands[index]
+            let right = operands [index + 1]
+            let usedOperator = operators[index]
 
             switch usedOperator {
             case "+":
                 result = additionCalcul(left: left, right: right)
             case "-":
                 result = substractionCalcul(left: left, right: right)
+            case "*":
+                result = multiplicationcalcul(left: left, right: right)
+            case "/":
+                result = divisionCalcul(left: left, right: right)
             default:
                 break
             }
-            calculNumber.removeFirst()
-            calculNumber.removeFirst()
-            operators.removeFirst()
-            calculNumber.insert(result, at: 0)
+            operands.remove(at: index)
+            operands.remove(at: index)
+            operators.remove(at: index)
+            operands.insert(result, at: index)
         }
         return result
     }
 
     ///methode to remove all array
     func clear() {
-        calculNumber.removeAll()
+        operands.removeAll()
         operators.removeAll()
     }
 
     // MARK: Private Methode
-    ///Calculation logic method for prioritu Operator
-    private func priorityCalcul() {
-        while isAPriorityOperator == true {
-            for usedOperator in operators {
-                let priorityOperator = usedOperator
-                if priorityOperator == "*" || priorityOperator == "/" {
-                    if let operatorIndex = operators.firstIndex(of: priorityOperator) {
-                        let left = calculNumber[operatorIndex]
-                        let right = calculNumber [operatorIndex + 1]
-                        let usedPriorityOperator = operators[operatorIndex]
-
-                        switch usedPriorityOperator {
-                        case "*":
-                            result = multiplicationcalcul(left: left, right: right)
-                        case "/":
-                            result = divisionCalcul(left: left, right: right)
-                        default:
-                            break
-                        }
-                        calculNumber.remove(at: operatorIndex)
-                        calculNumber.remove(at: operatorIndex)
-                        operators.remove(at: operatorIndex)
-                        calculNumber.insert(result, at: operatorIndex)
-                    }
-                }
-            }
-        }
-    }
 
     private func additionCalcul(left: Int, right: Int) -> Int {
         return left + right
