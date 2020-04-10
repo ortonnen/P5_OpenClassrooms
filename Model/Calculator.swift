@@ -13,21 +13,27 @@ class Calculator {
     var operators = [String]()
     var operands = [Int]()
 
-    ///check if the calculation contains priority operator
-    var isAPriorityOperator: Bool {
-        for usedOperator in operators {
-            if usedOperator == "*" || usedOperator == "/"{
-                return true
-            }
-        }
-        return false
-    }
-
     var result = 0
+
+    var expressionIsCorrect: Bool {
+        return operators.count < operands.count
+    }
+    var expressionHaveEnoughElement: Bool {
+        return operators.count >= 1 && operands.count >= 2
+    }
+    var calculIsPossible: Bool {
+        if operators.contains("/") {
+            let index = operators.firstIndex(of: "/") ?? 0
+            let left = operands[index]
+            let right = operands[index + 1]
+            return left != 0 && right != 0
+        }
+        return true
+    }
 
     // MARK: Internal Methode
     /// Number Array
-    func addNewNumber(_ newNumber: Int) {
+    func addOperand(_ newNumber: Int) {
         operands.append(newNumber)
     }
 
@@ -38,17 +44,17 @@ class Calculator {
 
     /// Calculation logic method
     func calcul() -> Int {
-        while operands.count >= 2 {
+        while expressionHaveEnoughElement {
             var index = 0
 
             if operators.contains("*") {
-                index = operators.firstIndex(of: "*") ?? 0
+                index = operators.firstIndex(of:"*") ?? 0
             } else if operators.contains("/") {
                 index = operators.firstIndex(of: "/") ?? 0
             }
 
             let left = operands[index]
-            let right = operands [index + 1]
+            let right = operands[index + 1]
             let usedOperator = operators[index]
 
             switch usedOperator {
@@ -91,7 +97,7 @@ class Calculator {
         if left != 0 && right != 0 {
             return left / right
         } else {
-            return -99999
+            return -9999
         }
     }
 

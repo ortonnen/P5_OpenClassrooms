@@ -12,24 +12,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet var numberButtons: [UIButton]!
 
+    var operand = String()
     var calculator = Calculator()
     var elements: [String] {
         return textView.text.split(separator: " ").map { "\($0)" }
     }
-
     // Error check computed variables
-    var expressionIsCorrect: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
-    }
-
-    var expressionHaveEnoughElement: Bool {
-        return elements.count >= 3
-    }
-
-    var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
-    }
-
     var expressionHaveResult: Bool {
         return textView.text.firstIndex(of: "=") != nil
     }
@@ -49,11 +37,12 @@ class ViewController: UIViewController {
             textView.text = ""
         }
         textView.text.append(numberText)
-        calculator.addNewNumber(Int(numberText)!)
+        operand += numberText
     }
 
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        if canAddOperator {
+        addOperand()
+        if calculator.expressionIsCorrect {
             textView.text.append(" + ")
             calculator.addOperator("+")
         } else {
@@ -62,7 +51,8 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        if canAddOperator {
+        addOperand()
+        if calculator.expressionIsCorrect {
             textView.text.append(" - ")
             calculator.addOperator("-")
         } else {
@@ -71,7 +61,8 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedMultiplyButton(_ sender: UIButton) {
-        if canAddOperator {
+        addOperand()
+        if calculator.expressionIsCorrect {
             textView.text.append(" x ")
             calculator.addOperator("*")
         } else {
@@ -80,7 +71,8 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedDivideButton(_ sender: UIButton) {
-        if canAddOperator {
+        addOperand()
+        if calculator.expressionIsCorrect {
             textView.text.append(" / ")
             calculator.addOperator("/")
         } else {
@@ -94,16 +86,23 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tappedEqualButton(_ sender: UIButton) {
-        guard expressionIsCorrect else {
+        addOperand()
+        guard calculator.expressionIsCorrect else {
            return alerteCorrectExpression()
         }
-
-        guard expressionHaveEnoughElement else {
+        guard calculator.calculIsPossible else {
+            return alerteErrorDivide()
+        }
+        guard calculator.expressionHaveEnoughElement else {
             return alerteStartNewCalcul()
         }
-
         textView.text.append(" = \(calculator.calcul())")
         calculator.clear()
+    }
+
+    private func addOperand() {
+        calculator.addOperand(Int(operand) ?? 0 )
+        operand = ""
     }
 
     private func alerteOperator() {
@@ -121,6 +120,13 @@ class ViewController: UIViewController {
 
     private func alerteStartNewCalcul() {
         let alertVC = UIAlertController(title: "Zéro!", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
+    }
+
+    private func alerteErrorDivide() {
+        let alertVC = UIAlertController(title: "Zéro!", message: "Impossible de diviser par 0 !",
+        preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }
