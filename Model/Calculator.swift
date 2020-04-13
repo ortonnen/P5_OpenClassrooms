@@ -16,19 +16,18 @@ class Calculator {
     var result: Double = 0
 
     var expressionIsCorrect: Bool {
-        return operators.count < operands.count - 1 && expressionHaveEnoughElement
+        return operators.count == operands.count - 1 && expressionHaveEnoughElement
     }
+    
     var expressionHaveEnoughElement: Bool {
         return operators.count >= 1 && operands.count >= 2
     }
     var calculIsPossible: Bool {
-        if operators.contains("/") {
-            let index = operators.firstIndex(of: "/") ?? 0
+        guard operators.contains("/") else { return true }
+            let index = operators.firstIndex(of: "/")!
             let left = operands[index]
             let right = operands[index + 1]
             return left != 0 && right != 0
-        }
-        return true
     }
 
     // MARK: Internal Methode
@@ -94,11 +93,8 @@ class Calculator {
     }
 
     private func divisionCalcul(left: Double, right: Double) -> Double {
-        if left != 0 && right != 0 {
+        guard left != 0 && right != 0 else { return -9999 }
             return left / right
-        } else {
-            return -9999
-        }
     }
 
     private func multiplicationcalcul(left: Double, right: Double) -> Double {

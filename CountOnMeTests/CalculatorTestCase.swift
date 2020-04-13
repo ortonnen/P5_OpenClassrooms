@@ -70,12 +70,31 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(secondCalcul, 2)
     }
 
-    func testGivenStarCalcul_WhenDivideByZero_ThenCalculIsImpossible() {
+    func testGivenStarCalcul_WhenDivideByZeroAtSecondOperand_ThenCalculIsImpossible() {
         calculator.addOperand(10)
         calculator.addOperand(0)
         calculator.addOperator("/")
 
         XCTAssertFalse(calculator.calculIsPossible)
+        XCTAssertEqual(calculator.calcul(), -9999)
+    }
+
+    func testGivenStarCalcul_WhenDivideByZeroAtFirstOperand_ThenCalculIsImpossible() {
+        calculator.addOperand(0)
+        calculator.addOperand(10)
+        calculator.addOperator("/")
+
+        XCTAssertFalse(calculator.calculIsPossible)
+        XCTAssertEqual(calculator.calcul(), -9999)
+    }
+
+    func testGivenStarCalcul_WhenWithoutZero_ThenCalculIsImpossible() {
+        calculator.addOperand(10)
+        calculator.addOperand(2)
+        calculator.addOperator("/")
+
+        XCTAssertTrue(calculator.calculIsPossible)
+        XCTAssertEqual(calculator.calcul(), 5)
     }
 
     func testGivenStarCalcul_WhenMissingAnOperator_ThenCalculIsImpossible() {
@@ -89,6 +108,22 @@ class CalculatorTestCase: XCTestCase {
         calculator.addOperand(12)
         calculator.addOperand(6)
         calculator.addOperator("/")
+        calculator.addOperator("+")
+
+        XCTAssertFalse(calculator.expressionIsCorrect)
+    }
+
+    func testGivenStartCalcul_WhenMissingAnOperand_ThenCalculIsImpossible() {
+           calculator.addOperand(12)
+           calculator.addOperator("+")
+
+           XCTAssertFalse(calculator.expressionIsCorrect)
+       }
+
+    func testGivenStartCalcul_WhenExtraOperand_ThenCalculIsImpossible() {
+        calculator.addOperand(12)
+        calculator.addOperand(6)
+        calculator.addOperand(3)
         calculator.addOperator("+")
 
         XCTAssertFalse(calculator.expressionIsCorrect)
