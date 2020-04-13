@@ -101,7 +101,7 @@ class ViewController: UIViewController {
     }
 
     private func addOperand() {
-        calculator.addOperand(Int(operand) ?? 0 )
+        calculator.addOperand(Double(operand)!)
         operand = ""
     }
 
