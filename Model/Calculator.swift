@@ -11,12 +11,12 @@ import Foundation
 class Calculator {
     // MARK: Proprities
     var operators = [String]()
-    var operands = [Int]()
+    var operands = [Double]()
 
-    var result = 0
+    var result: Double = 0
 
     var expressionIsCorrect: Bool {
-        return operators.count < operands.count
+        return operators.count < operands.count - 1 && expressionHaveEnoughElement
     }
     var expressionHaveEnoughElement: Bool {
         return operators.count >= 1 && operands.count >= 2
@@ -33,7 +33,7 @@ class Calculator {
 
     // MARK: Internal Methode
     /// Number Array
-    func addOperand(_ newNumber: Int) {
+    func addOperand(_ newNumber: Double) {
         operands.append(newNumber)
     }
 
@@ -43,12 +43,12 @@ class Calculator {
     }
 
     /// Calculation logic method
-    func calcul() -> Int {
+    func calcul() -> Double {
         while expressionHaveEnoughElement {
             var index = 0
 
             if operators.contains("*") {
-                index = operators.firstIndex(of:"*") ?? 0
+                index = operators.firstIndex(of: "*") ?? 0
             } else if operators.contains("/") {
                 index = operators.firstIndex(of: "/") ?? 0
             }
@@ -85,15 +85,15 @@ class Calculator {
 
     // MARK: Private Methode
 
-    private func additionCalcul(left: Int, right: Int) -> Int {
+    private func additionCalcul(left: Double, right: Double) -> Double {
         return left + right
     }
 
-    private func substractionCalcul(left: Int, right: Int) -> Int {
+    private func substractionCalcul(left: Double, right: Double) -> Double {
         return left - right
     }
 
-    private func divisionCalcul(left: Int, right: Int) -> Int {
+    private func divisionCalcul(left: Double, right: Double) -> Double {
         if left != 0 && right != 0 {
             return left / right
         } else {
@@ -101,7 +101,7 @@ class Calculator {
         }
     }
 
-    private func multiplicationcalcul(left: Int, right: Int) -> Int {
+    private func multiplicationcalcul(left: Double, right: Double) -> Double {
         return left * right
     }
 }

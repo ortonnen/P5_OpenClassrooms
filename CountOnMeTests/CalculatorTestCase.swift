@@ -18,50 +18,50 @@ class CalculatorTestCase: XCTestCase {
     }
 
     func testGivenStarOperation_WhenAddNewNumber_ThenCalculIsPossible() {
-        calculator.addNewNumber(5)
+        calculator.addOperand(5)
         calculator.addOperator("+")
-        calculator.addNewNumber(10)
+        calculator.addOperand(10)
         calculator.addOperator("=")
 
         XCTAssertEqual(calculator.calcul(), 15)
     }
 
     func testGivenStarOpertion_WhenOperatorIsMultiply_ThenCalculIsCorrect() {
-        calculator.addNewNumber(2)
+        calculator.addOperand(2)
         calculator.addOperator("*")
-        calculator.addNewNumber(2)
+        calculator.addOperand(2)
 
         XCTAssertEqual(calculator.calcul(), 4)
     }
 
     func testGivenStarOperationWithCalculFunc_WhenPriorityCalculation_ThenCalculIsPossible() {
-        calculator.addNewNumber(20)
+        calculator.addOperand(20)
         calculator.addOperator("+")
-        calculator.addNewNumber(5)
+        calculator.addOperand(5)
         calculator.addOperator("*")
-        calculator.addNewNumber(4)
+        calculator.addOperand(4)
         calculator.addOperator("/")
-        calculator.addNewNumber(2)
+        calculator.addOperand(2)
         calculator.addOperator("-")
-        calculator.addNewNumber(12)
+        calculator.addOperand(12)
 
         XCTAssertEqual(calculator.calcul(), 18)
     }
 
     func testGivenMakeManyCalcul_WhenFirstIsOver_ThenSecondCalculStart() {
-        var firstCalcul = 0
-        var secondCalcul = 0
-        calculator.addNewNumber(2)
+        var firstCalcul = 0.0
+        var secondCalcul = 0.0
+        calculator.addOperand(2)
         calculator.addOperator("*")
-        calculator.addNewNumber(2)
+        calculator.addOperand(2)
         calculator.addOperator("=")
 
         firstCalcul = calculator.calcul()
         calculator.clear()
 
-        calculator.addNewNumber(firstCalcul)
+        calculator.addOperand(firstCalcul)
         calculator.addOperator("/")
-        calculator.addNewNumber(2)
+        calculator.addOperand(2)
         calculator.addOperator("=")
 
         secondCalcul = calculator.calcul()
@@ -70,21 +70,27 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(secondCalcul, 2)
     }
 
-    func testGivenUseOperator_WhenOperatorIsMultiplyOrDivide_ThenOperatorIsPrioritaire() {
-        //definir opérator prioritaire
-        calculator.addOperator("+")
-        calculator.addOperator("-")
-        calculator.addOperator("*")
+    func testGivenStarCalcul_WhenDivideByZero_ThenCalculIsImpossible() {
+        calculator.addOperand(10)
+        calculator.addOperand(0)
+        calculator.addOperator("/")
 
-        XCTAssertEqual(calculator.isAPriorityOperator, true)
+        XCTAssertFalse(calculator.calculIsPossible)
     }
 
-    func testGivenUseOperator_WhenOperatorIsMinusOrPlus_ThenOperatorIsNotPrioritaire() {
-        //definir opérator prioritaire
-        calculator.addOperator("+")
-        calculator.addOperator("-")
+    func testGivenStarCalcul_WhenMissingAnOperator_ThenCalculIsImpossible() {
+        calculator.addOperand(12)
+        calculator.addOperand(6)
+
+        XCTAssertFalse(calculator.expressionIsCorrect)
+    }
+
+    func testGivenStartCalcul_WhenExtraOperator_ThenCalculIsImpossible() {
+        calculator.addOperand(12)
+        calculator.addOperand(6)
+        calculator.addOperator("/")
         calculator.addOperator("+")
 
-        XCTAssertEqual(calculator.isAPriorityOperator, false)
+        XCTAssertFalse(calculator.expressionIsCorrect)
     }
 }
