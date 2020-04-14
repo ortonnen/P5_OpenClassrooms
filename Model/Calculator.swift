@@ -12,22 +12,32 @@ class Calculator {
     // MARK: Proprities
     var operators = [String]()
     var operands = [Double]()
-
     var result: Double = 0
 
     var expressionIsCorrect: Bool {
-        return operators.count == operands.count - 1 && expressionHaveEnoughElement
+        return operators.count < operands.count
     }
-    
+
     var expressionHaveEnoughElement: Bool {
+        guard operators.count == operands.count - 1 else { return false }
         return operators.count >= 1 && operands.count >= 2
     }
+
     var calculIsPossible: Bool {
         guard operators.contains("/") else { return true }
             let index = operators.firstIndex(of: "/")!
             let left = operands[index]
             let right = operands[index + 1]
             return left != 0 && right != 0
+    }
+
+    var isAPriorityOperator: Bool {
+        for usedOperator in operators {
+            if usedOperator == "*" || usedOperator == "/"{
+                return true
+            }
+        }
+        return false
     }
 
     // MARK: Internal Methode
@@ -43,15 +53,9 @@ class Calculator {
 
     /// Calculation logic method
     func calcul() -> Double {
+        priorityCalcul()
         while expressionHaveEnoughElement {
-            var index = 0
-
-            if operators.contains("*") {
-                index = operators.firstIndex(of: "*") ?? 0
-            } else if operators.contains("/") {
-                index = operators.firstIndex(of: "/") ?? 0
-            }
-
+            let index = 0
             let left = operands[index]
             let right = operands[index + 1]
             let usedOperator = operators[index]
@@ -61,10 +65,6 @@ class Calculator {
                 result = additionCalcul(left: left, right: right)
             case "-":
                 result = substractionCalcul(left: left, right: right)
-            case "*":
-                result = multiplicationcalcul(left: left, right: right)
-            case "/":
-                result = divisionCalcul(left: left, right: right)
             default:
                 break
             }
@@ -99,5 +99,34 @@ class Calculator {
 
     private func multiplicationcalcul(left: Double, right: Double) -> Double {
         return left * right
+    }
+
+    private func priorityCalcul() {
+        if expressionHaveEnoughElement {
+            while isAPriorityOperator == true {
+                for usedOperator in operators {
+                    if usedOperator == "*" || usedOperator == "/" {
+                        if let index = operators.firstIndex(of: usedOperator) {
+                            let left = operands[index]
+                            let right = operands[index + 1]
+                            let usedPriorityOperator = operators[index]
+
+                            switch usedPriorityOperator {
+                            case "*":
+                                result = multiplicationcalcul(left: left, right: right)
+                            case "/":
+                                result = divisionCalcul(left: left, right: right)
+                            default:
+                                break
+                            }
+                            operands.remove(at: index)
+                            operands.remove(at: index)
+                            operators.remove(at: index)
+                            operands.insert(result, at: index)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

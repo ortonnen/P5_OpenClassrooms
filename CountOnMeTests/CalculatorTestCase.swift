@@ -21,7 +21,6 @@ class CalculatorTestCase: XCTestCase {
         calculator.addOperand(5)
         calculator.addOperator("+")
         calculator.addOperand(10)
-        calculator.addOperator("=")
 
         XCTAssertEqual(calculator.calcul(), 15)
     }
@@ -54,7 +53,6 @@ class CalculatorTestCase: XCTestCase {
         calculator.addOperand(2)
         calculator.addOperator("*")
         calculator.addOperand(2)
-        calculator.addOperator("=")
 
         firstCalcul = calculator.calcul()
         calculator.clear()
@@ -62,7 +60,6 @@ class CalculatorTestCase: XCTestCase {
         calculator.addOperand(firstCalcul)
         calculator.addOperator("/")
         calculator.addOperand(2)
-        calculator.addOperator("=")
 
         secondCalcul = calculator.calcul()
 
@@ -101,7 +98,8 @@ class CalculatorTestCase: XCTestCase {
         calculator.addOperand(12)
         calculator.addOperand(6)
 
-        XCTAssertFalse(calculator.expressionIsCorrect)
+        XCTAssertTrue(calculator.expressionIsCorrect)
+        XCTAssertFalse(calculator.expressionHaveEnoughElement)
     }
 
     func testGivenStartCalcul_WhenExtraOperator_ThenCalculIsImpossible() {
@@ -111,14 +109,16 @@ class CalculatorTestCase: XCTestCase {
         calculator.addOperator("+")
 
         XCTAssertFalse(calculator.expressionIsCorrect)
+        XCTAssertFalse(calculator.expressionHaveEnoughElement)
     }
 
     func testGivenStartCalcul_WhenMissingAnOperand_ThenCalculIsImpossible() {
-           calculator.addOperand(12)
-           calculator.addOperator("+")
+        calculator.addOperand(12)
+        calculator.addOperator("+")
 
-           XCTAssertFalse(calculator.expressionIsCorrect)
-       }
+        XCTAssertFalse(calculator.expressionIsCorrect)
+        XCTAssertFalse(calculator.expressionHaveEnoughElement)
+    }
 
     func testGivenStartCalcul_WhenExtraOperand_ThenCalculIsImpossible() {
         calculator.addOperand(12)
@@ -126,6 +126,7 @@ class CalculatorTestCase: XCTestCase {
         calculator.addOperand(3)
         calculator.addOperator("+")
 
-        XCTAssertFalse(calculator.expressionIsCorrect)
+        XCTAssertTrue(calculator.expressionIsCorrect)
+        XCTAssertFalse(calculator.expressionHaveEnoughElement)
     }
 }
