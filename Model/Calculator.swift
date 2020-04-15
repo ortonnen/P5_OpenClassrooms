@@ -10,10 +10,6 @@ import Foundation
 
 class Calculator {
     // MARK: Proprities
-    var operators = [String]()
-    var operands = [Double]()
-    var result: Double = 0
-
     var expressionIsCorrect: Bool {
         return operators.count < operands.count
     }
@@ -31,7 +27,11 @@ class Calculator {
             return left != 0 && right != 0
     }
 
-    var isAPriorityOperator: Bool {
+    private var operators = [String]()
+    private var operands = [Double]()
+    private var result: Double = 0
+
+    private var isAPriorityOperator: Bool {
         for usedOperator in operators {
             if usedOperator == "*" || usedOperator == "/"{
                 return true

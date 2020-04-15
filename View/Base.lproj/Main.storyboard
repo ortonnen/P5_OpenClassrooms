@@ -126,8 +126,8 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mws-pT-aUp">
                                                 <rect key="frame" x="0.0" y="0.0" width="96" height="63"/>
                                                 <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                                <state key="normal" title="C">
+                                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                <state key="normal" title="AC">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -371,12 +371,12 @@
                                 <exclude reference="KxA-ml-kZb"/>
                                 <exclude reference="Wfx-iL-JEf"/>
                                 <exclude reference="af7-p5-8WP"/>
-                                <exclude reference="90n-th-MbW"/>
                                 <exclude reference="5rr-jw-ix8"/>
                                 <exclude reference="IWK-mW-6ad"/>
                                 <exclude reference="kHJ-7A-JjM"/>
                                 <exclude reference="rgz-GG-Cex"/>
                                 <exclude reference="syz-7i-Av6"/>
+                                <exclude reference="90n-th-MbW"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=compact">
@@ -388,7 +388,6 @@
                                 <exclude reference="JMv-6x-DdI"/>
                                 <include reference="KxA-ml-kZb"/>
                                 <exclude reference="Wfx-iL-JEf"/>
-                                <exclude reference="O7x-wm-1ze"/>
                                 <exclude reference="pcV-iL-bhv"/>
                                 <include reference="5rr-jw-ix8"/>
                                 <exclude reference="IWK-mW-6ad"/>
@@ -396,6 +395,7 @@
                                 <exclude reference="ki4-uI-L01"/>
                                 <include reference="syz-7i-Av6"/>
                                 <exclude reference="vvN-fu-V6i"/>
+                                <exclude reference="O7x-wm-1ze"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact-widthClass=regular">
@@ -404,12 +404,12 @@
                                 <exclude reference="BXk-6K-qj5"/>
                                 <include reference="Dzo-Rg-Mhl"/>
                                 <include reference="af7-p5-8WP"/>
-                                <include reference="90n-th-MbW"/>
-                                <exclude reference="O7x-wm-1ze"/>
                                 <exclude reference="j4O-Ao-deC"/>
                                 <include reference="kHJ-7A-JjM"/>
                                 <exclude reference="ki4-uI-L01"/>
                                 <include reference="rgz-GG-Cex"/>
+                                <include reference="90n-th-MbW"/>
+                                <exclude reference="O7x-wm-1ze"/>
                             </mask>
                         </variation>
                     </view>
