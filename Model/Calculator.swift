@@ -9,6 +9,11 @@
 import Foundation
 
 class Calculator {
+    // MARK: Enum
+    enum CalculatorError: Error {
+        case divideByZero
+        case missingOperator
+    }
     // MARK: Proprities
     var expressionIsCorrect: Bool {
         return operators.count < operands.count
@@ -22,9 +27,8 @@ class Calculator {
     var calculIsPossible: Bool {
         guard operators.contains("/") else { return true }
             let index = operators.firstIndex(of: "/")!
-            let left = operands[index]
             let right = operands[index + 1]
-            return left != 0 && right != 0
+            return right != 0
     }
 
     private var operators = [String]()
@@ -92,8 +96,8 @@ class Calculator {
         return left - right
     }
 
-    private func divisionCalcul(left: Double, right: Double) -> Double {
-        guard left != 0 && right != 0 else { return -9999 }
+    private func divisionCalcul(left: Double, right: Double) throws -> Double {
+        guard right != 0 else { throw CalculatorError.divideByZero }
             return left / right
     }
 
@@ -115,7 +119,13 @@ class Calculator {
                             case "*":
                                 result = multiplicationcalcul(left: left, right: right)
                             case "/":
-                                result = divisionCalcul(left: left, right: right)
+                                do {
+                                  try result = divisionCalcul(left: left, right: right)
+                                } catch CalculatorError.divideByZero {
+                                   print("impossible to divide by zéro")
+                                } catch {
+                                    print("Erreur")
+                                }
                             default:
                                 break
                             }
