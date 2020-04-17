@@ -99,8 +99,16 @@ class ViewController: UIViewController {
         guard calculator.expressionHaveEnoughElement else {
             return alertStartNewCalcul()
         }
-        textView.text.append(" = \(calculator.calcul())")
+        do {
+        textView.text.append(" = \(try calculator.calcul())")
         calculator.clear()
+        } catch CalculatorError.divideByZero {
+            print("impossible to divide by zéro")
+            return alertErrorDivide()
+        } catch {
+            print("Erreur")
+            return alertCorrectExpression()
+        }
     }
 
     // MARK: Private Methods

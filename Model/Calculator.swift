@@ -8,12 +8,14 @@
 
 import Foundation
 
+// MARK: Enum
+enum CalculatorError: Error {
+    case divideByZero
+    case missingOperator
+}
+
 class Calculator {
-    // MARK: Enum
-    enum CalculatorError: Error {
-        case divideByZero
-        case missingOperator
-    }
+
     // MARK: Proprities
     var expressionIsCorrect: Bool {
         return operators.count < operands.count
@@ -56,8 +58,9 @@ class Calculator {
     }
 
     /// Calculation logic method
-    func calcul() -> Double {
-        priorityCalcul()
+    func calcul() throws -> Double {
+          try priorityCalcul()
+
         while expressionHaveEnoughElement {
             let index = 0
             let left = operands[index]
@@ -105,7 +108,7 @@ class Calculator {
         return left * right
     }
 
-    private func priorityCalcul() {
+    private func priorityCalcul() throws {
         if expressionHaveEnoughElement {
             while isAPriorityOperator == true {
                 for usedOperator in operators {
@@ -119,13 +122,7 @@ class Calculator {
                             case "*":
                                 result = multiplicationcalcul(left: left, right: right)
                             case "/":
-                                do {
                                   try result = divisionCalcul(left: left, right: right)
-                                } catch CalculatorError.divideByZero {
-                                   print("impossible to divide by zéro")
-                                } catch {
-                                    print("Erreur")
-                                }
                             default:
                                 break
                             }
