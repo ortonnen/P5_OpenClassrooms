@@ -47,25 +47,25 @@ class CalculatorTestCase: XCTestCase {
         XCTAssertEqual(try calculator.calcul(), 18)
     }
 
-//    func testGivenMakeManyCalcul_WhenFirstIsOver_ThenSecondCalculStart() {
-//        var firstCalcul = 0.0
-//        var secondCalcul = 0.0
-//        calculator.addOperand(2)
-//        calculator.addOperator("*")
-//        calculator.addOperand(2)
-//
-//        try calculator.calcul()
-//        calculator.clear()
-//
-//        calculator.addOperand(firstCalcul)
-//        calculator.addOperator("/")
-//        calculator.addOperand(2)
-//
-//        secondCalcul = try calculator.calcul()
-//
-//        XCTAssertEqual(firstCalcul, 4)
-//        XCTAssertEqual(secondCalcul, 2)
-//    }
+    func testGivenMakeManyCalcul_WhenFirstIsOver_ThenSecondCalculStart() {
+        var firstCalcul: Double?
+        var secondCalcul: Double?
+        calculator.addOperand(2)
+        calculator.addOperator("*")
+        calculator.addOperand(2)
+
+        firstCalcul = try? calculator.calcul()
+        calculator.clear()
+
+        calculator.addOperand(firstCalcul ?? 0)
+        calculator.addOperator("/")
+        calculator.addOperand(2)
+
+        secondCalcul = try? calculator.calcul()
+
+        XCTAssertEqual(firstCalcul, 4)
+        XCTAssertEqual(secondCalcul, 2)
+    }
 
    func testGivenStarCalcul_WhenDivideByZeroAtSecondOperand_ThenCalculIsImpossible() {
         calculator.addOperand(10)
