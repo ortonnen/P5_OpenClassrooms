@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CalculatorViewController: UIViewController {
     // MARK: Proprieties
     ///IBOutlet
     @IBOutlet weak var textView: UITextView!
@@ -23,6 +23,9 @@ class ViewController: UIViewController {
     var expressionHaveResult: Bool {
         return textView.text.firstIndex(of: "=") != nil
     }
+    var expressionIsEmpty: Bool {
+        return textView.text == "" || textView.text == "0"
+    }
 
     // MARK: Methodes
     /// View Life cycles
@@ -33,6 +36,9 @@ class ViewController: UIViewController {
 
     /// View action add operand
     @IBAction func tappedNumberButton(_ sender: UIButton) {
+        if expressionIsEmpty {
+            textView.text = ""
+        }
         guard let numberText = sender.title(for: .normal) else {
             return
         }
@@ -84,7 +90,7 @@ class ViewController: UIViewController {
     }
     /// View action reset calculation
     @IBAction func tappedResetButton(_ sender: UIButton) {
-        textView.text = ""
+        textView.text = "0"
         calculator.clear()
     }
     /// View action end of calculation show result
