@@ -26,6 +26,9 @@ class CalculatorViewController: UIViewController {
     var expressionIsEmpty: Bool {
         return textView.text == "" || textView.text == "0"
     }
+    var calculIsFinish: Bool {
+        return textView.text.contains("=")
+    }
 
     // MARK: Methodes
     /// View Life cycles
@@ -50,42 +53,58 @@ class CalculatorViewController: UIViewController {
     }
     /// View action addition calculation
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
+        guard expressionIsEmpty == false else {
+            return alertCorrectExpression()
+        }
+        guard calculIsFinish == false else {
+            return alertStartNewCalcul()
+        }
         addOperand()
         if calculator.expressionIsCorrect {
             textView.text.append(" + ")
             calculator.addOperator("+")
-        } else {
-            alertOperator()
         }
     }
     /// View action substraction calculation
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
+        guard expressionIsEmpty == false else {
+            return alertCorrectExpression()
+        }
+        guard calculIsFinish == false else {
+            return alertStartNewCalcul()
+        }
         addOperand()
         if calculator.expressionIsCorrect {
             textView.text.append(" - ")
             calculator.addOperator("-")
-        } else {
-           alertOperator()
         }
     }
     /// View action multiplication calculation
     @IBAction func tappedMultiplyButton(_ sender: UIButton) {
+        guard expressionIsEmpty == false else {
+            return alertCorrectExpression()
+        }
+        guard calculIsFinish == false else {
+            return alertStartNewCalcul()
+        }
         addOperand()
         if calculator.expressionIsCorrect {
             textView.text.append(" x ")
             calculator.addOperator("*")
-        } else {
-            alertOperator()
         }
     }
     /// View action division calculation
     @IBAction func tappedDivideButton(_ sender: UIButton) {
+        guard expressionIsEmpty == false else {
+            return alertCorrectExpression()
+        }
+        guard calculIsFinish == false else {
+            return alertStartNewCalcul()
+        }
         addOperand()
         if calculator.expressionIsCorrect {
             textView.text.append(" / ")
             calculator.addOperator("/")
-        } else {
-            alertOperator()
         }
     }
     /// View action reset calculation
@@ -95,25 +114,21 @@ class CalculatorViewController: UIViewController {
     }
     /// View action end of calculation show result
     @IBAction func tappedEqualButton(_ sender: UIButton) {
-        addOperand()
-        guard calculator.expressionIsCorrect else {
-           return alertCorrectExpression()
-        }
-        guard calculator.calculIsPossible else {
-            return alertErrorDivide()
-        }
-        guard calculator.expressionHaveEnoughElement else {
+        guard expressionIsEmpty == false && calculIsFinish == false else {
             return alertStartNewCalcul()
         }
-        do {
-        textView.text.append(" = \(try calculator.calcul())")
-        calculator.clear()
-        } catch CalculatorError.divideByZero {
-            print("impossible to divide by zéro")
-            return alertErrorDivide()
-        } catch {
-            print("Erreur")
-            return alertCorrectExpression()
+        addOperand()
+        if calculator.expressionIsCorrect {
+            do {
+            textView.text.append(" = \(try calculator.calcul())")
+            calculator.clear()
+            } catch CalculatorError.divideByZero {
+                print("impossible to divide by zéro")
+                return alertErrorDivide()
+            } catch {
+                print("Erreur")
+                return alertCorrectExpression()
+            }
         }
     }
 
