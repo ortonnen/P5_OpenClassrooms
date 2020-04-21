@@ -9,16 +9,16 @@
 import Foundation
 
 // MARK: Enum
-enum CalculatorError: Error {
-    case divideByZero
-    case missingOperator
+enum CalculatorError: String, Error {
+    case divideByZero = "Divide by zero is forbidden"
+    case missingOperator = "Count of operator is not correct "
 }
 
 class Calculator {
 
     // MARK: Proprities
     var expressionIsCorrect: Bool {
-        return operators.count < operands.count
+      return operators.count < operands.count
     }
 
     var expressionHaveEnoughElement: Bool {
@@ -60,7 +60,6 @@ class Calculator {
     /// Calculation logic method
     func calcul() throws -> Double {
           try priorityCalcul()
-
         while expressionHaveEnoughElement {
             let index = 0
             let left = operands[index]
@@ -73,7 +72,7 @@ class Calculator {
             case "-":
                 result = substractionCalcul(left: left, right: right)
             default:
-                break
+                throw CalculatorError.missingOperator
             }
             operands.remove(at: index)
             operands.remove(at: index)
@@ -124,7 +123,7 @@ class Calculator {
                             case "/":
                                   try result = divisionCalcul(left: left, right: right)
                             default:
-                                break
+                                throw CalculatorError.missingOperator
                             }
                             operands.remove(at: index)
                             operands.remove(at: index)

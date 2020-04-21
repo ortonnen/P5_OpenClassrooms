@@ -123,11 +123,13 @@ class CalculatorViewController: UIViewController {
             textView.text.append(" = \(try calculator.calcul())")
             calculator.clear()
             } catch CalculatorError.divideByZero {
-                print("impossible to divide by zéro")
+                print("\(CalculatorError.divideByZero.rawValue)")
                 return alertErrorDivide()
-            } catch {
-                print("Erreur")
+            } catch CalculatorError.missingOperator {
+                print("\(CalculatorError.missingOperator.rawValue)")
                 return alertCorrectExpression()
+            } catch {
+                print("error")
             }
         }
     }
