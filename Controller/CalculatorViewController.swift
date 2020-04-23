@@ -108,7 +108,7 @@ class CalculatorViewController: UIViewController {
             } catch {
                 print("error")
             }
-    }
+        }
     }
     /// View action reset calculation
     @IBAction func tappedResetButton(_ sender: UIButton) {

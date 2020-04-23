@@ -18,31 +18,30 @@ class CalculatorTestCase: XCTestCase {
     }
 
     func testGivenStarOperation_WhenAddNewNumber_ThenCalculIsPossible() {
-        calculator.addOperand(5)
-        calculator.addOperator("+")
-        calculator.addOperand(10)
+        try? calculator.addOperand(5)
+        try? calculator.addOperator("+")
+        try? calculator.addOperand(10)
 
         XCTAssertEqual(try calculator.calcul(), 15)
     }
 
     func testGivenStarOpertion_WhenOperatorIsMultiply_ThenCalculIsCorrect() {
-        calculator.addOperand(2)
-        calculator.addOperator("*")
-        calculator.addOperand(2)
-
+        try? calculator.addOperand(2)
+        try? calculator.addOperator("x")
+        try? calculator.addOperand(2)
         XCTAssertEqual(try calculator.calcul(), 4)
     }
 
     func testGivenStarOperationWithCalculFunc_WhenPriorityCalculation_ThenCalculIsPossible() {
-        calculator.addOperand(20)
-        calculator.addOperator("+")
-        calculator.addOperand(5)
-        calculator.addOperator("*")
-        calculator.addOperand(4)
-        calculator.addOperator("/")
-        calculator.addOperand(2)
-        calculator.addOperator("-")
-        calculator.addOperand(12)
+        try? calculator.addOperand(20)
+        try? calculator.addOperator("+")
+        try? calculator.addOperand(5)
+        try? calculator.addOperator("x")
+        try? calculator.addOperand(4)
+        try? calculator.addOperator("/")
+        try? calculator.addOperand(2)
+        try? calculator.addOperator("-")
+        try? calculator.addOperand(12)
 
         XCTAssertEqual(try calculator.calcul(), 18)
     }
@@ -50,16 +49,16 @@ class CalculatorTestCase: XCTestCase {
     func testGivenMakeManyCalcul_WhenFirstIsOver_ThenSecondCalculStart() {
         var firstCalcul: Double?
         var secondCalcul: Double?
-        calculator.addOperand(2)
-        calculator.addOperator("*")
-        calculator.addOperand(2)
+        try? calculator.addOperand(2)
+        try? calculator.addOperator("x")
+        try? calculator.addOperand(2)
 
         firstCalcul = try? calculator.calcul()
         calculator.clear()
 
-        calculator.addOperand(firstCalcul ?? 0)
-        calculator.addOperator("/")
-        calculator.addOperand(2)
+        try? calculator.addOperand(firstCalcul ?? 0)
+        try? calculator.addOperator("/")
+        try? calculator.addOperand(2)
 
         secondCalcul = try? calculator.calcul()
 
@@ -68,63 +67,63 @@ class CalculatorTestCase: XCTestCase {
     }
 
    func testGivenStarCalcul_WhenDivideByZeroAtSecondOperand_ThenCalculIsImpossible() {
-        calculator.addOperand(10)
-        calculator.addOperator("/")
-        calculator.addOperand(0)
+        try? calculator.addOperand(10)
+        try? calculator.addOperator("/")
+        try? calculator.addOperand(0)
 
         XCTAssertFalse(calculator.calculIsPossible)
         XCTAssertThrowsError(try calculator.calcul())
     }
 
     func testGivenStarCalcul_WhenDivideByZeroAtFirstOperand_ThenCalculIsPossible() {
-        calculator.addOperand(0)
-        calculator.addOperator("/")
-        calculator.addOperand(10)
+        try? calculator.addOperand(0)
+        try? calculator.addOperator("/")
+        try? calculator.addOperand(10)
 
         XCTAssertTrue(calculator.calculIsPossible)
         XCTAssertEqual(try calculator.calcul(), 0)
     }
 
     func testGivenStarCalcul_WhenWithoutZero_ThenCalculIsImpossible() {
-        calculator.addOperand(10)
-        calculator.addOperator("/")
-        calculator.addOperand(2)
+        try? calculator.addOperand(10)
+        try? calculator.addOperator("/")
+        try? calculator.addOperand(2)
 
         XCTAssertTrue(calculator.calculIsPossible)
         XCTAssertEqual(try calculator.calcul(), 5)
     }
 
     func testGivenStarCalcul_WhenMissingAnOperator_ThenCalculIsImpossible() {
-        calculator.addOperand(12)
-        calculator.addOperand(6)
+        try? calculator.addOperand(12)
+        try? calculator.addOperand(6)
 
         XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertFalse(calculator.expressionHaveEnoughElement)
     }
 
     func testGivenStartCalcul_WhenExtraOperator_ThenCalculIsImpossible() {
-        calculator.addOperand(12)
-        calculator.addOperator("/")
-        calculator.addOperand(6)
-        calculator.addOperator("+")
+        try? calculator.addOperand(12)
+        try? calculator.addOperator("/")
+        try? calculator.addOperand(6)
+        try? calculator.addOperator("+")
 
         XCTAssertFalse(calculator.expressionIsCorrect)
         XCTAssertFalse(calculator.expressionHaveEnoughElement)
     }
 
     func testGivenStartCalcul_WhenMissingAnOperand_ThenCalculIsImpossible() {
-        calculator.addOperand(12)
-        calculator.addOperator("+")
+        try? calculator.addOperand(12)
+        try? calculator.addOperator("+")
 
         XCTAssertFalse(calculator.expressionIsCorrect)
         XCTAssertFalse(calculator.expressionHaveEnoughElement)
     }
 
     func testGivenStartCalcul_WhenExtraOperand_ThenCalculIsImpossible() {
-        calculator.addOperand(12)
-        calculator.addOperator("+")
-        calculator.addOperand(6)
-        calculator.addOperand(3)
+        try? calculator.addOperand(12)
+        try? calculator.addOperator("+")
+        try? calculator.addOperand(6)
+        try? calculator.addOperand(3)
 
         XCTAssertTrue(calculator.expressionIsCorrect)
         XCTAssertFalse(calculator.expressionHaveEnoughElement)
