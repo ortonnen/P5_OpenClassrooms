@@ -51,112 +51,35 @@ class CalculatorViewController: UIViewController {
         textView.text.append(numberText)
         operand += numberText
     }
-    /// View action addition calculation
-    @IBAction func tappedAdditionButton(_ sender: UIButton) {
+    /// View action operator calculation
+    @IBAction func tappedOperatorButton(_ sender: UIButton) {
+        guard  let currentOperator = sender.currentTitle else { return }
         guard calculIsFinish == false else {
-            return alertStartNewCalcul()
-        }
-       if expressionIsEmpty == false {
-            do {
-                try addOperand()
-            } catch CalculatorError.errorOperand {
-                print("\(CalculatorError.errorOperand.rawValue)")
-                return alertOperator()
-            } catch {
-                print("error")
-            }
-        }
-        if calculator.expressionIsCorrect {
-            do {
-            textView.text.append(" + ")
-           try calculator.addOperator("+")
-            } catch CalculatorError.errorOperator {
-                print("\(CalculatorError.errorOperator.rawValue)")
-                return alertCorrectExpression()
-            } catch {
-                print("error")
-            }
-        }
-    }
-    /// View action substraction calculation
-    @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-         guard calculIsFinish == false else {
                    return alertStartNewCalcul()
                }
-        if expressionIsEmpty == false {
-            do {
-                try addOperand()
-            } catch CalculatorError.errorOperand {
-                print("\(CalculatorError.errorOperand.rawValue)")
-                return alertOperator()
-            } catch {
-                print("error")
-            }
-        }
-        if calculator.expressionIsCorrect {
-            do {
-            textView.text.append(" - ")
-            try calculator.addOperator("-")
-            } catch CalculatorError.errorOperator {
-                print("\(CalculatorError.errorOperator.rawValue)")
-                return alertCorrectExpression()
-            } catch {
-                print("error")
-            }
-        }
+              if expressionIsEmpty == false {
+                   do {
+                       try addOperand()
+                   } catch CalculatorError.errorOperand {
+                       print("\(CalculatorError.errorOperand.rawValue)")
+                       return alertOperator()
+                   } catch {
+                       print("error")
+                   }
+               }
+               if calculator.expressionIsCorrect {
+                   do {
+                    textView.text.append(currentOperator)
+                    try calculator.addOperator(currentOperator)
+                   } catch CalculatorError.errorOperator {
+                       print("\(CalculatorError.errorOperator.rawValue)")
+                       return alertCorrectExpression()
+                   } catch {
+                       print("error")
+                   }
+               }
     }
-    /// View action multiplication calculation
-    @IBAction func tappedMultiplyButton(_ sender: UIButton) {
-         guard calculIsFinish == false else { return alertStartNewCalcul() }
-      if expressionIsEmpty == false {
-          do {
-              try addOperand()
-          } catch CalculatorError.errorOperand {
-              print("\(CalculatorError.errorOperand.rawValue)")
-              return alertOperator()
-          } catch {
-              print("error")
-          }
-      }
-        if calculator.expressionIsCorrect {
-            do {
-            textView.text.append(" x ")
-           try calculator.addOperator("*")
-            } catch CalculatorError.errorOperator {
-                print("\(CalculatorError.errorOperator.rawValue)")
-                return alertCorrectExpression()
-            } catch {
-                print("error")
-            }
-        }
-    }
-    /// View action division calculation
-    @IBAction func tappedDivideButton(_ sender: UIButton) {
-        guard calculIsFinish == false else {
-            return alertStartNewCalcul()
-        }
-        if expressionIsEmpty == false {
-            do {
-                try addOperand()
-            } catch CalculatorError.errorOperand {
-                print("\(CalculatorError.errorOperand.rawValue)")
-                return alertOperator()
-            } catch {
-                print("error")
-            }
-        }
-        if calculator.expressionIsCorrect {
-            do {
-            textView.text.append(" / ")
-           try calculator.addOperator("/")
-            } catch CalculatorError.errorOperator {
-                print("\(CalculatorError.errorOperator.rawValue)")
-                return alertCorrectExpression()
-            } catch {
-                print("error")
-            }
-        }
-    }
+
     /// View action end of calculation show result
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         guard calculIsFinish == false else {
@@ -189,6 +112,7 @@ class CalculatorViewController: UIViewController {
     }
     /// View action reset calculation
     @IBAction func tappedResetButton(_ sender: UIButton) {
+        textView.text.removeAll()
         textView.text = "0"
         calculator.clear()
     }

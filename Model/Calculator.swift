@@ -40,7 +40,7 @@ class Calculator {
 
     private var isAPriorityOperator: Bool {
         for usedOperator in operators {
-            if usedOperator == "*" || usedOperator == "/"{
+            if usedOperator == "x" || usedOperator == "/"{
                 return true
             }
         }
@@ -114,14 +114,14 @@ class Calculator {
         if expressionHaveEnoughElement {
             while isAPriorityOperator == true {
                 for usedOperator in operators {
-                    if usedOperator == "*" || usedOperator == "/" {
+                    if usedOperator == "x" || usedOperator == "/" {
                         if let index = operators.firstIndex(of: usedOperator) {
                             let left = operands[index]
                             let right = operands[index + 1]
                             let usedPriorityOperator = operators[index]
 
                             switch usedPriorityOperator {
-                            case "*":
+                            case "x":
                                 result = multiplicationcalcul(left: left, right: right)
                             case "/":
                                   try result = divisionCalcul(left: left, right: right)
