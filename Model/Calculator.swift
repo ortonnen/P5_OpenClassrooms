@@ -11,7 +11,8 @@ import Foundation
 // MARK: Enum
 enum CalculatorError: String, Error {
     case divideByZero = "Divide by zero is forbidden"
-    case missingOperator = "Count of operator is not correct "
+    case errorOperator = "Count of operator is not correct "
+    case errorOperand = "Count of operand is not correct"
 }
 
 class Calculator {
@@ -48,12 +49,14 @@ class Calculator {
 
     // MARK: Internal Methode
     /// Number Array
-    func addOperand(_ newNumber: Double) {
+    func addOperand(_ newNumber: Double) throws {
+        guard operators.count <= operands.count else { throw CalculatorError.errorOperand }
         operands.append(newNumber)
     }
 
     /// Operator Array
-    func addOperator(_ newOperator: String) {
+    func addOperator(_ newOperator: String) throws {
+        guard expressionIsCorrect else { throw CalculatorError.errorOperator }
         operators.append(newOperator)
     }
 
@@ -72,7 +75,7 @@ class Calculator {
             case "-":
                 result = substractionCalcul(left: left, right: right)
             default:
-                throw CalculatorError.missingOperator
+                throw CalculatorError.errorOperator
             }
             operands.remove(at: index)
             operands.remove(at: index)
@@ -100,7 +103,7 @@ class Calculator {
 
     private func divisionCalcul(left: Double, right: Double) throws -> Double {
         guard right != 0 else { throw CalculatorError.divideByZero }
-            return left / right
+        return left / right
     }
 
     private func multiplicationcalcul(left: Double, right: Double) -> Double {
@@ -123,7 +126,7 @@ class Calculator {
                             case "/":
                                   try result = divisionCalcul(left: left, right: right)
                             default:
-                                throw CalculatorError.missingOperator
+                                throw CalculatorError.errorOperator
                             }
                             operands.remove(at: index)
                             operands.remove(at: index)
