@@ -12,13 +12,12 @@ class CalculatorViewController: UIViewController {
     // MARK: Proprieties
     ///IBOutlet
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet var numberButtons: [UIButton]!
     ///Proprieties
     var operand = String()
     var calculator = Calculator()
-    var elements: [String] {
-        return textView.text.split(separator: " ").map { "\($0)" }
-    }
+//    var elements: [String] {
+//        return textView.text.split(separator: " ").map { "\($0)" }
+//    }
     /// Error check computed variables
     var expressionHaveResult: Bool {
         return textView.text.firstIndex(of: "=") != nil
@@ -54,30 +53,30 @@ class CalculatorViewController: UIViewController {
     /// View action operator calculation
     @IBAction func tappedOperatorButton(_ sender: UIButton) {
         guard  let currentOperator = sender.currentTitle else { return }
-        guard calculIsFinish == false else {
-                   return alertStartNewCalcul()
-               }
-              if expressionIsEmpty == false {
-                   do {
-                       try addOperand()
-                   } catch CalculatorError.errorOperand {
-                       print("\(CalculatorError.errorOperand.rawValue)")
-                       return alertOperator()
-                   } catch {
-                       print("error")
-                   }
-               }
-               if calculator.expressionIsCorrect {
-                   do {
-                    textView.text.append(currentOperator)
-                    try calculator.addOperator(currentOperator)
-                   } catch CalculatorError.errorOperator {
-                       print("\(CalculatorError.errorOperator.rawValue)")
-                       return alertCorrectExpression()
-                   } catch {
-                       print("error")
-                   }
-               }
+        guard calculIsFinish == false else { return alertStartNewCalcul() }
+        if expressionIsEmpty == false {
+            do {
+                try addOperand()
+            } catch CalculatorError.errorOperand {
+                print("\(CalculatorError.errorOperand.rawValue)")
+                return alertOperator()
+            } catch {
+                print("error")
+            }
+        } else {
+            return alertCorrectExpression()
+        }
+        if calculator.expressionIsCorrect {
+            do {
+                textView.text.append(currentOperator)
+                try calculator.addOperator(currentOperator)
+            } catch CalculatorError.errorOperator {
+                print("\(CalculatorError.errorOperator.rawValue)")
+                return alertCorrectExpression()
+            } catch {
+                print("error")
+            }
+        }
     }
 
     /// View action end of calculation show result
@@ -94,6 +93,8 @@ class CalculatorViewController: UIViewController {
             } catch {
                 print("error")
             }
+        } else {
+            return alertCorrectExpression()
         }
         if calculator.expressionIsCorrect {
             do {
@@ -112,7 +113,7 @@ class CalculatorViewController: UIViewController {
     }
     /// View action reset calculation
     @IBAction func tappedResetButton(_ sender: UIButton) {
-        textView.text.removeAll()
+        operand = ""
         textView.text = "0"
         calculator.clear()
     }
@@ -150,5 +151,4 @@ class CalculatorViewController: UIViewController {
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }
-
 }
