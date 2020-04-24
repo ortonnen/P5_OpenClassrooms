@@ -19,7 +19,7 @@ class Calculator {
 
     // MARK: Proprities
     var expressionIsCorrect: Bool {
-      return operators.count < operands.count
+        return operators.count < operands.count
     }
 
     var expressionHaveEnoughElement: Bool {
@@ -29,9 +29,9 @@ class Calculator {
 
     var calculIsPossible: Bool {
         guard operators.contains("/") else { return true }
-            let index = operators.firstIndex(of: "/")!
-            let right = operands[index + 1]
-            return right != 0
+        let index = operators.firstIndex(of: "/")!
+        let right = operands[index + 1]
+        return right != 0
     }
 
     private var operators = [String]()
@@ -62,7 +62,7 @@ class Calculator {
 
     /// Calculation logic method
     func calcul() throws -> Double {
-          try priorityCalcul()
+        try priorityCalcul()
         while expressionHaveEnoughElement {
             let index = 0
             let left = operands[index]
@@ -124,7 +124,7 @@ class Calculator {
                             case "x":
                                 result = multiplicationcalcul(left: left, right: right)
                             case "/":
-                                  try result = divisionCalcul(left: left, right: right)
+                                try result = divisionCalcul(left: left, right: right)
                             default:
                                 throw CalculatorError.errorOperator
                             }
