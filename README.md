@@ -4,6 +4,9 @@ This project is part of the OpenClassrooms Learning Program and available on Git
 
 The main purpose of this project is to improve an existing application. The application is a simple calculator app, with the basic operations.
 
+<img width="287" alt="Capture d’écran 2021-06-18 à 10 14 57" src="https://user-images.githubusercontent.com/57671772/122529750-1aabe000-d01e-11eb-9339-27a5f3935872.png">
+
+
 ## Features
 The application allow the user to make a calculation of two, three or more operands. The application keeps track of the calculation priority and do the special operations ( multiplication and division ) before the normal ones ( addition and substraction ).
 
